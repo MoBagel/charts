@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  fastapi-helm:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-07-28T09:22:34.500392433Z"
+    description: A Helm chart for Kubernetes
+    digest: a2f2dc65ad5850560d690dc7da30081012441d7ba0339f6cb6a2e0a3dcc3b2df
+    name: fastapi-helm
+    type: application
+    urls:
+    - https://github.com/MoBagel/charts/releases/download/fastapi-helm-0.1.0/fastapi-helm-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-07-28T09:22:34.500443733Z"

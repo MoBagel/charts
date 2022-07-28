@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "fastapi-helm.configmapName" . }}
+  name: {{ include "fastapi.configmapName" . }}
   labels:
-    {{- include "fastapi-helm.labels" . | nindent 4 }}
+    {{- include "fastapi.labels" . | nindent 4 }}
 data:
   {{- range $key, $val := .Values.application.envs }}
   {{ $key }}: {{ $val | quote }}

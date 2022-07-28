@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "fastapi-helm.fullname" . }}
+  name: {{ include "fastapi.fullname" . }}
   labels:
-    {{- include "fastapi-helm.labels" . | nindent 4 }}
+    {{- include "fastapi.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "fastapi-helm.selectorLabels" . | nindent 6 }}
+      {{- include "fastapi.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "fastapi-helm.selectorLabels" . | nindent 8 }}
+        {{- include "fastapi.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "fastapi-helm.serviceAccountName" . }}
+      serviceAccountName: {{ include "fastapi.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -50,7 +50,7 @@ spec:
           command: [ "uvicorn" ]
           args: [ "main:app", "--host", "0.0.0.0", "--port", {{ .Values.service.containerPort | quote }} ]
           env:
-            {{- $configmapName := include "fastapi-helm.configmapName" . -}}
+            {{- $configmapName := include "fastapi.configmapName" . -}}
             {{- range $key, $val := .Values.application.envs }}
             - name: {{ $key | snakecase | upper }}
               valueFrom:
@@ -70,7 +70,7 @@ spec:
           {{- end }}
       {{- if .Values.application.googleServiceAccountSecret }}
       volumes:
-        {{- include "fastapi-helm.google_service_account" . | indent 8 }}
+        {{- include "fastapi.google_service_account" . | indent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

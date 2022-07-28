@@ -21,8 +21,8 @@ helm install --namespace fastapi --create-namespace my-backend .
 To install the chart with the release name `my-release` under namespace `my-namespace` using github repository:
 
 ```console
-$ git clone https://github.com/MoBagel/fastapi-helm.git
-$ helm install --namespace my-namespace --create-namespace my-release .
+$ helm repo add mobagel https://mobagel.github.io/charts
+$ helm install --namespace my-namespace --create-namespace my-release mobagel/fastapi
 ```
 
 ## Parameters

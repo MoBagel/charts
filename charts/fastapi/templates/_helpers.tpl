@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "fastapi-helm.name" -}}
+{{- define "fastapi.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "fastapi-helm.fullname" -}}
+{{- define "fastapi.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -24,14 +24,14 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/* Create chart name and version as used by the chart label. */}}
-{{- define "fastapi-helm.chart" -}}
+{{- define "fastapi.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/* Common labels */}}
-{{- define "fastapi-helm.labels" -}}
-helm.sh/chart: {{ include "fastapi-helm.chart" . }}
-{{ include "fastapi-helm.selectorLabels" . }}
+{{- define "fastapi.labels" -}}
+helm.sh/chart: {{ include "fastapi.chart" . }}
+{{ include "fastapi.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -39,27 +39,27 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/* Selector labels */}}
-{{- define "fastapi-helm.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "fastapi-helm.name" . }}
+{{- define "fastapi.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "fastapi.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/* Create the name of the service account to use */}}
-{{- define "fastapi-helm.serviceAccountName" -}}
+{{- define "fastapi.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "fastapi-helm.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "fastapi.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
 {{/* The name of config map */}}
-{{- define "fastapi-helm.configmapName" -}}
+{{- define "fastapi.configmapName" -}}
 {{- .Release.Name }}-configmap
 {{- end }}
 
 {{/* Google service account json file volume */}}
-{{- define "fastapi-helm.google_service_account" }}
+{{- define "fastapi.google_service_account" }}
 - name: google-service-account
   secret:
     secretName: {{ .Values.application.googleServiceAccountSecret }}
